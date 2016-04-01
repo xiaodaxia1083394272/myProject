@@ -1,93 +1,5 @@
-if (typeof String.prototype.trim !== 'function') {
-    String.prototype.trim = function() {
-        return this.replace(/^\s+|\s+$/g, '');
-    }
-}
 
-Date.prototype.format = function(format) {
-    var date = {
-        "M+": this.getMonth() + 1,
-        "d+": this.getDate(),
-        "h+": this.getHours(),
-        "m+": this.getMinutes(),
-        "s+": this.getSeconds(),
-        "q+": Math.floor((this.getMonth() + 3) / 3),
-        "S+": this.getMilliseconds()
-    };
-    if (/(y+)/i.test(format)) {
-        format = format.replace(RegExp.$1, (this.getFullYear() + '').substr(4 - RegExp.$1.length));
-    }
-    for (var k in date) {
-        if (new RegExp("(" + k + ")").test(format)) {
-            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? date[k] : ("00" + date[k]).substr(("" + date[k]).length));
-        }
-    }
-    return format;
-}
-
-String.prototype.format = String.prototype.f = function() {
-    var s = this,
-        i = arguments.length;
-
-    while (i--) {
-        s = s.replace(new RegExp('\\{' + i + '\\}', 'gm'), arguments[i]);
-    }
-    return s;
-};
-
-function transTimeFormart(time) {
-    var new_date = new Date(time * 1000);
-    return new_date.format('hh:mm')
-}
-
-function trans2WeekDayWithYear(book_date) {
-    var new_date = new Date(book_date * 1000);
-    Y = new_date.getFullYear() + '年';
-    return Y + trans2WeekDay(book_date);
-}
-
-function trans2WeekDay(book_date) {
-    var new_date = new Date(book_date * 1000);
-    M = (new_date.getMonth() + 1) + '月';
-    D = new_date.getDate() + '日';
-    W = ""
-    switch (new_date.getDay()) {
-        case 0:
-            W = "日";
-            break;
-        case 1:
-            W = "一";
-            break;
-        case 2:
-            W = "二";
-            break;
-        case 3:
-            W = "三";
-            break;
-        case 4:
-            W = "四";
-            break;
-        case 5:
-            W = "五";
-            break;
-        case 6:
-            W = "六";
-            break;
-    }
-    return M + D + "(周" + W + ")";
-}
-
-function trans2Day(date) {
-    var new_date = new Date(date * 1000);
-    var Y = new_date.getFullYear() + '年';
-    var M = (new_date.getMonth() + 1 < 10 ? '0' + (new_date.getMonth() + 1) : new_date.getMonth() + 1) + '月';
-    var D = new_date.getDate() + '日';
-    var YMD = Y + M + D;
-
-    return YMD;
-}
-
-/*获取URL中的参数的值*/
+/*1获取URL中的参数的值*/
 function getURLInformation() {
     var urlMsg = {}; //定义一个空对象urlMsg
     if (window.location.href.split('#')[0].split('?')[1]) {
@@ -101,11 +13,11 @@ function getURLInformation() {
     return urlMsg;
 }
 
-// 是否手机号码 输入任意值 输出布尔值
+// 2是否手机号码 输入任意值 输出布尔值
 function isPhoneNumber(num) {
     return !!(!isNaN(num - "0") == true && num.length == 11 && /13|14|15|17|18/i.test(num.substring(0, 2)) && num % 1 == 0)
 }
-//设置cookie
+//3设置cookie
 function setCookie(_key, _value, days, _tag, callback) {
 
     $.nmDebug.log("setCookies callback  ",callback);
@@ -147,7 +59,7 @@ function setCookie(_key, _value, days, _tag, callback) {
 
 }
 
-//获取cookie
+//4获取cookie
 function getCookie(name) {
     var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
     if (arr = document.cookie.match(reg))
@@ -156,14 +68,14 @@ function getCookie(name) {
         return null;
 }
 
-//删除cookie
+//5删除cookie
 function deleteCookie(name) {
     var date = new Date();
     date.setTime(date.getTime() - 10000);
     document.cookie = name + "=v; expires=" + date.toGMTString();
 }
 
-/*  倒计时功能
+/* 6 倒计时功能
  o:选择器对象
 */
 function setCodeTimer(obj) {
@@ -210,7 +122,7 @@ function whiteBtnMouseEvent(btn) {
 }
 
 /**
- * 蓝色按钮的鼠标效果
+ * 7蓝色按钮的鼠标效果
  * @param btn
  */
 function blueBtnMouseEvent(btn) {
@@ -230,7 +142,7 @@ function blueBtnMouseEvent(btn) {
     });
 }
 
-/*判断当前登录状态
+/*8判断当前登录状态
   return true 登录了 false 未登录
 */
 function isLogin() {
@@ -253,7 +165,7 @@ jQuery.extend({
     }
 })
 
-/*判断是否是ie9以下的浏览器*/
+/*9判断是否是ie9以下的浏览器*/
 function isIELow() {
     if (!![].forEach) {
         return false;
@@ -261,7 +173,7 @@ function isIELow() {
         return true;
     }
 }
-/*判断当前是什么浏览器，此方法不是特别准确，请慎用*/
+/*10 判断当前是什么浏览器，此方法不是特别准确，请慎用*/
 function getOs() {
 
     if (!![].forEach) {
@@ -348,7 +260,7 @@ $(document).ready(function() {
         })
     }
 });
-/*获取屏幕高度*/
+/*11 获取屏幕高度*/
 function getHeight() {
     if (window.innerHeight != undefined) {
         return window.innerHeight;
@@ -369,3 +281,5 @@ function underIE9() {
     }
 
 }
+//12 随机数
+parseInt(Math.random()*(n-m) + m); 
